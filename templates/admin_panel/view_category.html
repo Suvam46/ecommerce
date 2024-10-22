@@ -1,0 +1,32 @@
+{% extends "admin_panel/base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Manage Categories</h1>
+    <a href="{% url 'add_category' %}" class="btn btn-primary mb-3">Add New Category</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Link</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td><img src="{{ category.image.url }}" alt="{{ category.name }}" width="100"></td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.link }}</td>
+                <td>{{ category.slug }}</td>
+                <td>
+                    <a href="{% url 'edit_category' category.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_category' category.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

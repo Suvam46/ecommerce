@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- breadcrumb end here -->
+<div class="topimage">
+	<img src="{% static 'images/bck_bg.jpg' %}" class="img-fluid" alt="image" title="image" />
+</div>
+<div class="bread-crumb">
+	<div class="container">
+		<div class="matter">
+			<div class="pull-left">
+				<ul class="list-inline">
+					<li><a href="{% url 'TestApp:home' %}">Home</a></li>
+					<li><a href="{% url 'TestApp:aboutus' %}">About us</a></li>
+				</ul>
+			</div>
+			<div class="pull-right">
+				<h2>About us</h2>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- breadcrumb end here -->
+
+
+
+<!-- faq start here -->
+<div class="commontop">
+	<div class="container"> 
+		<div class="row about">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<h1>About us</h1>
+				<hr>
+			</div>
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<img src="{{ about_us_section.image.url }}" class="img-fluid" alt="image" title="image" />
+			</div>
+			<div class="col-md-7 col-sm-7 col-xs-12">
+				<h2>Introduction</h2>
+				<p>{{ about_us_section.introduction }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+		<div class="row team">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<h1>Our Team</h1>
+				<hr>
+			</div>
+			
+			{% for member in team_members %}
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="box">
+					<img src="{{ member.image.url }}" class="img-fluid" alt="{{ member.name }}" title="{{ member.name }}" />
+					<div class="caption">
+						<h4>{{ member.name }}</h4>
+						<p>{{ member.position }}</p>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		
+
+	</div>
+</div>
+<!-- faq end here -->
+
+<!-- abouticon start here -->
+<div class="abouticon">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="box">
+					<img src="{% static 'images/about/icon1.png' %}" class="img-fluid" alt="icon" title="icon" />
+					<h4>{{ site_settings.cup_of_coffee }}</h4>
+					<p>Cup of Coffee</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="box">
+					<img src="{% static 'images/about/icon2.png' %}" class="img-fluid" alt="icon" title="icon" />
+					<h4>{{ site_settings.happy_users }}</h4>
+					<p>Happy Users</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="box">
+					<img src="{% static 'images/about/icon3.png' %}" class="img-fluid" alt="icon" title="icon" />
+					<h4>{{ site_settings.ads_posts }}</h4>
+					<p>Ads Posts</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="box">
+					<img src="{% static 'images/about/icon4.png' %}" class="img-fluid" alt="icon" title="icon" />
+					<h4>{{ site_settings.total_users }}</h4>
+					<p>Total Users</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- abouticon end here -->
+
+
+<!-- banner start here -->
+	<div class="slideshow owl-carousel">
+		{% for banner in banners %}
+		<div class="item">
+			{% if banner.image %}
+				<img src="{{ banner.image.url }}" alt="{{ banner.alt_text }}" title="{{ banner.alt_text }}" class="img-fluid sliderchange"/>
+			{% endif %}
+		</div>
+		{% endfor %}
+	</div>
+<!-- banner end here -->
+{% endblock %}

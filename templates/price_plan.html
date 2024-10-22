@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- breadcrumb end here -->
+<div class="topimage">
+	<img src="{% static 'images/bck_bg.jpg' %}" class="img-fluid" alt="image" title="image" />
+</div>
+<div class="bread-crumb">
+	<div class="container">
+		<div class="matter">
+			<div class="pull-left">
+				<ul class="list-inline">
+					<li><a href="{% url "TestApp:home" %}">Home</a></li>
+					<li><a href="{% url "TestApp:view_pricing_plans" %}">Pricing Plans</a></li>
+				</ul>
+			</div>
+			<div class="pull-right">
+				<h2>Pricing Plans</h2>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- breadcrumb end here -->
+
+
+<!-- pricing start here -->
+<div class="commontop ">
+    <div class="container"> 
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 priceplan">
+                <h5>Pricing Plans</h5>
+                <hr />
+                <ul class="list-inline">
+                    {% for plan in plans %}
+                    <li>
+                        <div class="heading"><p>{{ forloop.counter }}</p><span>{{ plan.title }}</span></div>
+                        <div class="matter">
+                            <div class="special">${{ plan.price }}</div>
+                            <p>{{ plan.duration_days }} D</p>
+                            <span>{{ plan.description|safe }}</span>
+                        </div>
+                        <p class="text"><i class="la la-check"></i> {% if plan.ad_posting %} Free Ad Posting {% else %} No Free Ad Posting {% endif %}</p>
+                        <p class="text"><i class="la la-check"></i> {% if plan.features_ad_availability %} Feature Ad Availability {% else %} No Feature Ad Availability {% endif %}</p>
+                        <p class="text"><i class="la la-check"></i> For {{ plan.duration_days }} Days</p>
+                        <p class="text bor"><i class="la la-check"></i> {% if plan.security_guarantee %} 100% Secure {% else %} Not Secure {% endif %}</p>
+                        <div class="text-center">
+                            <button type="button">Buy Now</button>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

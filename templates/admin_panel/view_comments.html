@@ -1,0 +1,39 @@
+
+
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Manage Comments</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Content</th>
+                <th>Blog Post</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.name }}</td>
+                <td>{{ comment.email }}</td>
+                <td>{{ comment.content|truncatewords:10 }}</td>
+                <td>{{ comment.blog_post.title }}</td>
+                <td>
+                    <a href="{% url 'edit_comment' comment.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

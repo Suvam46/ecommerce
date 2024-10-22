@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}  <!-- Ensure your custom filters are loaded -->
+
+{% block content %}
+<div class="topimage">
+    <img src="{% static 'images/bck_bg.jpg' %}" class="img-fluid" alt="Background image" title="Background image"> <!-- Use static tag -->
+</div>
+
+<!-- ad-single start here -->
+<div class="commontop">
+    <div class="container"> 
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="dashboard">
+                    <div class="profile">
+                        <div class="col-sm-3 col-xs-12">
+                            <img class="img-fluid" src="{% static 'images/dashboard/dp.png' %}" alt="Profile image" title="Profile image"> <!-- Use static tag -->
+                        </div>
+                        <div class="col-sm-9 col-xs-12 padd0">
+                            <h4>{{ user.get_full_name|default:user.username }}</h4>  <!-- Dynamic user name -->
+                            <div class="common">
+                                <p class="des"><i class="la la-map-marker"></i> {{ user.profile.location|default:"Location not available" }}</p>  <!-- Assuming you have a user profile with location -->
+                                <p class="des1">Create Account: {{ user.date_joined|date:"Y-m-d" }}</p>  <!-- Show account creation time -->
+                            </div>
+                            <ul class="list-inline">
+                                <li><a href="{% url 'TestApp:user_dashboard' %}"><img src="{% static 'images/dashboard/grid.png' %}" alt="Dashboard" title="Dashboard" /><p>Dashboard</p></a></li>
+                                <li><a href="{% url 'TestApp:my_ads' %}"><img src="{% static 'images/dashboard/card.png' %}" alt="My Ads" title="My Ads" /><p>My Ads</p></a></li>
+                                <li><a href="{% url 'TestApp:my_searches' %}"><img src="{% static 'images/dashboard/search.png' %}" alt="My Searches" title="My Searches" /><p>My Searches</p></a></li>
+                                <li class="active"><a href="{% url 'TestApp:fav_ads' %}"><img src="{% static 'images/dashboard/heart.png' %}" alt="Favourite Ads" title="Favourite Ads" /><p>Favourite Ads</p></a></li>
+                                <li><a href="{% url 'TestApp:settings' %}"><img src="{% static 'images/dashboard/setting.png' %}" alt="Settings" title="Settings" /><p>Setting</p></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="inner-fav">
+                        {% if ads %}
+                            {% for ad in ads %}
+                                <div class="product-layout product-list">
+                                    <div class="product-thumb">
+                                        <div class="image">
+                                            <a href="{% url 'ad_detail' ad.id %}"><img src="{{ ad.image.url }}" alt="{{ ad.title }}" title="{{ ad.title }}" class="img-fluid"></a>
+                                        </div>
+                                        <div class="caption">
+                                            <h4><a href="{% url 'ad_detail' ad.id %}">{{ ad.title }}</a></h4>
+                                            <p class="des">Category: {{ ad.category }}</p>
+                                            <ul class="list-unstyled">
+                                                <li><i class="la la-map-marker"></i> {{ ad.location }}</li>
+                                                <li><i class="la la-clock-o"></i> {{ ad.created_at|timeago_format }}</li>  <!-- Use the custom filter -->
+                                            </ul>
+                                            <hr>
+                                            <p class="des">{{ ad.description }}</p>
+                                            <div class="button-group text-center visible-xs">
+                                                <button type="button">${{ ad.price }}</button>
+                                                <button type="button"><i class="la la-envelope-o"></i></button>
+                                                <button type="button"><i class="la la-phone"></i></button>
+                                                <button type="button"><i class="la la-heart-o"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="button-group text-center hidden-xs">
+                                            <button type="button">${{ ad.price }}</button>
+                                            <button type="button"><i class="la la-envelope-o"></i></button>
+                                            <button type="button"><i class="la la-phone"></i></button>
+                                            <button type="button"><i class="la la-heart-o"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No favorite ads found.</p>  <!-- Message when no ads are found -->
+                        {% endif %}
+                        <div class="text-center icon">
+                            <i class="la la-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ad-single end here -->
+{% endblock %}
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="topimage">
+	<img src="images/bck_bg.jpg" class="img-fluid" alt="image" title="image">
+</div>
+
+<!-- ad-single start here -->
+<div class="commontop">
+	<div class="container"> 
+		<div class="row">
+			<div class="col-sm-12 col-xs-12">
+				<div class="dashboard">
+					<div class="profile">
+						<div class="col-sm-3 col-xs-12">
+							<img class="img-fluid" src="images/dashboard/dp.png" alt="image" title="image">
+						</div>
+						<div class="col-sm-9 col-xs-12 padd0">
+							<h4>John Doe</h4>
+							<div class="common">
+								<p class="des"><i class="la la-map-marker"></i> Ludhiana, Punjab</p>
+								<p class="des1">Create Account : 2 Years ago</p>
+							</div>
+							<ul class="list-inline">
+								<li ><a href="dashboard.html"><img src="images/dashboard/grid.png" alt="image" title="image" /><p>Dashboard</p></a></li>
+								<li ><a href="dashboard_my_ads.html"><img src="images/dashboard/card.png" alt="image" title="image" /><p>My Ads</p></a></li>
+								<li><a href="dashboard_my_searches.html"><img src="images/dashboard/search.png" alt="image" title="image" /><p>My Searches</p></a></li>
+								<li class="active"><a href="dashboard_fav_ads.html"><img src="images/dashboard/heart.png" alt="image" title="image" /><p>Favourite Ads</p></a></li>
+								<li><a href="dashboard_message.html"><img src="images/dashboard/message.png" alt="image" title="image" /><p>Messages</p></a></li>
+								<li><a href="dashboard_setting.html"><img src="images/dashboard/setting.png" alt="image" title="image" /><p>Setting</p></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="inner-fav">
+						<div class="product-layout product-list">
+							<div class="product-thumb">
+								<div class="image">
+									<a href="ads_single_view.html"><img src="images/mobile/01.jpg" alt="image" title="image" class="img-fluid"></a>
+								</div>
+								<div class="caption">
+									<h4><a href="ads_single_view.html">Ads post title here</a></h4>
+									<p class="des">Category : Vehicle</p>
+									<ul class="list-unstyled">
+										<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+										<li><i class="la la-clock-o"></i> 15 Hour ago</li>
+									</ul>
+									<hr>
+									<p class="des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium dictum diam vel laoreet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer dictum justo nec lacus porta congue....</p>
+									<div class="button-group text-center visible-xs">
+										<button type="button">$ 12000</button>
+										<button type="button"><i class="la la-envelope-o"></i></button>
+										<button type="button"><i class="la la-phone"></i></button>
+										<button type="button"><i class="la la-heart-o"></i></button>
+									</div>
+								</div>
+								<div class="button-group text-center hidden-xs">
+									<button type="button">$ 12000</button>
+									<button type="button"><i class="la la-envelope-o"></i></button>
+									<button type="button"><i class="la la-phone"></i></button>
+									<button type="button"><i class="la la-heart-o"></i></button>
+								</div>
+							</div>
+						</div>
+						<div class="product-layout product-list">
+							<div class="product-thumb">
+								<div class="image">
+									<a href="ads_single_view.html"><img src="images/mobile/01.jpg" alt="image" title="image" class="img-fluid"></a>
+								</div>
+								<div class="caption">
+									<h4><a href="ads_single_view.html">Ads post title here</a></h4>
+									<p class="des">Category : Vehicle</p>
+									<ul class="list-unstyled">
+										<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+										<li><i class="la la-clock-o"></i> 15 Hour ago</li>
+									</ul>
+									<hr>
+									<p class="des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium dictum diam vel laoreet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer dictum justo nec lacus porta congue....</p>
+									<div class="button-group text-center visible-xs">
+										<button type="button">$ 12000</button>
+										<button type="button"><i class="la la-envelope-o"></i></button>
+										<button type="button"><i class="la la-phone"></i></button>
+										<button type="button"><i class="la la-heart-o"></i></button>
+									</div>
+								</div>
+								<div class="button-group text-center hidden-xs">
+									<button type="button">$ 12000</button>
+									<button type="button"><i class="la la-envelope-o"></i></button>
+									<button type="button"><i class="la la-phone"></i></button>
+									<button type="button"><i class="la la-heart-o"></i></button>
+								</div>
+							</div>
+						</div>
+						<div class="product-layout product-list">
+							<div class="product-thumb">
+								<div class="image">
+									<a href="ads_single_view.html"><img src="images/mobile/01.jpg" alt="image" title="image" class="img-fluid"></a>
+								</div>
+								<div class="caption">
+									<h4><a href="ads_single_view.html">Ads post title here</a></h4>
+									<p class="des">Category : Vehicle</p>
+									<ul class="list-unstyled">
+										<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+										<li><i class="la la-clock-o"></i> 15 Hour ago</li>
+									</ul>
+									<hr>
+									<p class="des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium dictum diam vel laoreet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer dictum justo nec lacus porta congue....</p>
+									<div class="button-group text-center visible-xs">
+										<button type="button">$ 12000</button>
+										<button type="button"><i class="la la-envelope-o"></i></button>
+										<button type="button"><i class="la la-phone"></i></button>
+										<button type="button"><i class="la la-heart-o"></i></button>
+									</div>
+								</div>
+								<div class="button-group text-center hidden-xs">
+									<button type="button">$ 12000</button>
+									<button type="button"><i class="la la-envelope-o"></i></button>
+									<button type="button"><i class="la la-phone"></i></button>
+									<button type="button"><i class="la la-heart-o"></i></button>
+								</div>
+							</div>
+						</div>
+						<div class="product-layout product-list">
+							<div class="product-thumb">
+								<div class="image">
+									<a href="ads_single_view.html"><img src="images/mobile/01.jpg" alt="image" title="image" class="img-fluid"></a>
+								</div>
+								<div class="caption">
+									<h4><a href="ads_single_view.html">Ads post title here</a></h4>
+									<p class="des">Category : Vehicle</p>
+									<ul class="list-unstyled">
+										<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+										<li><i class="la la-clock-o"></i> 15 Hour ago</li>
+									</ul>
+									<hr>
+									<p class="des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium dictum diam vel laoreet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer dictum justo nec lacus porta congue....</p>
+									<div class="button-group text-center visible-xs">
+										<button type="button">$ 12000</button>
+										<button type="button"><i class="la la-envelope-o"></i></button>
+										<button type="button"><i class="la la-phone"></i></button>
+										<button type="button"><i class="la la-heart-o"></i></button>
+									</div>
+								</div>
+								<div class="button-group text-center hidden-xs">
+									<button type="button">$ 12000</button>
+									<button type="button"><i class="la la-envelope-o"></i></button>
+									<button type="button"><i class="la la-phone"></i></button>
+									<button type="button"><i class="la la-heart-o"></i></button>
+								</div>
+							</div>
+						</div>
+						<div class="text-center icon">
+							<i class="la la-spinner fa-spin"></i>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ad-single end here -->
+{% endblock %} {% endcomment %}

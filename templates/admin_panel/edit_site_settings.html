@@ -1,0 +1,13 @@
+{% extends 'admin_panel/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>Edit Site Settings</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{% url 'view_site_settings' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

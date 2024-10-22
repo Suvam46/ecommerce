@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Search Results for "{{ query }}"</h2>
+{% if page_obj.object_list %}
+    <ul>
+        {% for blog in page_obj.object_list %}
+            <li>
+                <h3><a href="{{ blog_posts.get_absolute_url }}">{{ blog_posts.title }}</a></h3>
+                <p>{{ blog_posts.content|truncatewords:20 }}</p> <!-- Truncate content to 20 words -->
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Pagination Links -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?s={{ query }}&page=1">First</a>
+                <a href="?s={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?s={{ query }}&page={{ page_obj.next_page_number }}">Next</a>
+                <a href="?s={{ query }}&page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        </span>
+    </div>
+{% else %}
+    <p>No results found for "{{ query }}".</p>
+{% endif %}
+{% endblock %}
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+    <!-- Search Form -->
+    <form class="form-horizontal search" method="get" action="{% url 'TestApp:search_results' %}">
+        <fieldset>
+            <div class="form-group">
+                <!-- Text Search Input -->
+                <input name="s" value="{{ request.GET.s }}" class="form-control" placeholder="Enter Keyword" type="text">
+            </div>
+            <button type="submit" class="btn"><i class="icon_search" aria-hidden="true"></i> Search</button>
+        </fieldset>
+    </form>
+
+    <!-- Search Results -->
+    <h2>Search Results for "{{ query }}"</h2>
+    {% if page_obj.object_list %}
+        <ul>
+            {% for post in page_obj.object_list %}
+                <li>
+                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <p>{{ post.content|truncatewords:20 }}</p> <!-- Truncate content to 20 words -->
+                </li>
+            {% endfor %}
+        </ul>
+    
+        <!-- Pagination Links -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?s={{ query }}&page=1">First</a>
+                    <a href="?s={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+    
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+    
+                {% if page_obj.has_next %}
+                    <a href="?s={{ query }}&page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?s={{ query }}&page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <p>No results found for "{{ query }}".</p>
+    {% endif %}
+{% endblock %}     {% endcomment %}

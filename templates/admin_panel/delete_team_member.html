@@ -1,0 +1,10 @@
+{% extends 'admin_panel/base.html' %}
+{% block content %}
+<h1>Are you sure you want to delete {{ team_member.name }}?</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'view_team' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

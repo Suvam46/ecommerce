@@ -1,0 +1,12 @@
+{% extends "admin_panel/base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Delete Blog</h1>
+    <p>Are you sure you want to delete "{{ post.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'view_blog' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

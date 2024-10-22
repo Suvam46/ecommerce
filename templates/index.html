@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- slider start here -->
+
+<div class="slideshow owl-carousel">
+	{% for banner in banners %}
+    <div class="item">
+        {% if banner.image %}
+            <img src="{{ banner.image.url }}" alt="{{ banner.alt_text }}" title="{{ banner.alt_text }}" class="img-fluid sliderchange"/>
+        {% endif %}
+    </div>
+	{% endfor %}
+</div>
+
+<!-- slider end here -->
+
+<!-- browse start here -->
+<div class="browse">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Browse Category</h2>
+                <hr/>
+                <ul class="list-inline">
+                    {% for category in categories %}
+                        <li>
+                            <a href="{{ category.link|default:'#' }}">
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}" title="{{ category.name }}" class="img-fluid" />
+                                <p>{{ category.name }}</p>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- browse end here -->
+
+<!-- banner start here -->
+{% comment %} <div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="{% static '/images/ads.jpg' %}" class="img-fluid bannerchange" alt="image" title="title" />
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- banner end here --> {% endcomment %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- slider start here -->
+<div class="slideshow owl-carousel">
+	<div class="item">
+		<img src="static/images/banner.jpg" alt="banner" title="banner" class="img-fluid sliderchange"/>
+	</div>
+	<div class="item">
+		<img src="static/images/banner.jpg" alt="banner" title="banner" class="img-fluid sliderchange"/>
+	</div>
+	<div class="item">
+		<img src="static/images/banner.jpg" alt="banner" title="banner" class="img-fluid sliderchange"/>
+	</div>
+</div>
+<!-- slider end here -->
+
+<!-- browse start here -->
+<div class="browse">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Browse Category</h2>
+				<hr/>
+				<ul class="list-inline">
+					<li><a href="vehicle_category.html"><img src="static/images/icon1.png" alt="icon" title="icon" class="img-fluid" /><p>Vehicles</p></a></li>
+					<li><a href="mobile_category.html"><img src="static/images/icon2.png" alt="icon" title="icon" class="img-fluid" /><p>Mobiles</p></a></li>
+					<li><a href="electonics_category.html"><img src="static/images/icon3.png" alt="icon" title="icon" class="img-fluid" /><p>Electonics</p></a></li>
+					<li><a href="real_estate_category.html"><img src="static/images/icon4.png" alt="icon" title="icon" class="img-fluid" /><p>Real Estate</p></a></li>
+					<li><a href="fashion_category.html"><img src="static/images/icon5.png" alt="icon" title="icon" class="img-fluid" /><p>Fashion</p></a></li>
+					<li><a href="furniture_category.html"><img src="static/images/icon6.png" alt="icon" title="icon" class="img-fluid" /><p>Furniture</p></a></li>
+					<li><a href="jobs_category.html"><img src="static/images/icon7.png" alt="icon" title="icon" class="img-fluid" /><p>Jobs</p></a></li>
+					<li><a href="services_category.html"><img src="static/images/icon8.png" alt="icon" title="icon" class="img-fluid" /><p>Services</p></a></li>
+					<li><a href="pets_category.html"><img src="static/images/icon9.png" alt="icon" title="icon" class="img-fluid" /><p>Pets</p></a></li>
+					<li><a href="education_category.html"><img src="static/images/icon10.png" alt="icon" title="icon" class="img-fluid" /><p>Education</p></a></li>
+					<li><a href="matrimony_category.html"><img src="static/images/icon11.png" alt="icon" title="icon" class="img-fluid" /><p>Matrimony</p></a></li>
+					<li><a href="note_coins_category.html"><img src="static/images/icon12.png" alt="icon" title="icon" class="img-fluid" /><p>Notes and Coins</p></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>	
+<!-- browse end here -->
+
+
+<!-- banner start here -->
+<div class="banner">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<img src="static/images/ads.jpg" class="img-fluid bannerchange" alt="image" title="title"  />
+			</div>
+		</div>
+	</div>
+</div>	
+<!-- banner end here -->
+ {% endblock %} {% endcomment %}

@@ -1,0 +1,480 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}  <!-- Ensure your custom filters are loaded -->
+
+{% block content %}
+<div class="topimage">
+    <img src="{% static 'images/bck_bg.jpg' %}" class="img-fluid" alt="Background image" title="Background image">  <!-- Use static tag -->
+</div>
+
+<!-- ad-single start here -->
+<div class="commontop">
+    <div class="container"> 
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="dashboard">
+                    <div class="profile">
+                        <div class="col-sm-3 col-xs-12">
+                            {% if user.profile.image %}
+                                <img class="img-fluid" src="{{ user.profile.image.url }}" alt="Profile image" title="Profile image">
+                            {% else %}
+                                <img class="img-fluid" src="{% static 'images/dashboard/dp.png' %}" alt="Default Profile image" title="Default Profile image">
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-sm-9 col-xs-12 padd0">
+                            <h4>{{ user.get_full_name|default:user.username }}</h4>  <!-- Dynamic user name -->
+                            <div class="common">
+                                <p class="des"><i class="la la-map-marker"></i> {{ user.profile.location|default:"Location not available" }}</p>  <!-- User's location -->
+                                <p class="des1">Create Account: {{ user.date_joined|date:"Y-m-d" }}</p>  <!-- Show account creation time -->
+                            </div>
+                            <ul class="list-inline">
+                                <li><a href="{% url 'TestApp:user_dashboard' %}"><img src="{% static 'images/dashboard/grid.png' %}" alt="Dashboard" title="Dashboard" /><p>Dashboard</p></a></li>
+                                <li><a href="{% url 'TestApp:my_ads' %}"><img src="{% static 'images/dashboard/card.png' %}" alt="My Ads" title="My Ads" /><p>My Ads</p></a></li>
+                                <li><a href="{% url 'TestApp:my_searches' %}"><img src="{% static 'images/dashboard/search.png' %}" alt="My Searches" title="My Searches" /><p>My Searches</p></a></li>
+                                <li><a href="{% url 'TestApp:fav_ads' %}"><img src="{% static 'images/dashboard/heart.png' %}" alt="Favourite Ads" title="Favourite Ads" /><p>Favourite Ads</p></a></li>
+                                <li class="active"><a href="{% url 'TestApp:settings' %}"><img src="{% static 'images/dashboard/setting.png' %}" alt="Settings" title="Settings" /><p>Setting</p></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="inner-setting">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default active">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                        <h4 class="panel-title">Contact Details  <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+                                    </a>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-4">
+                                                <form class="form-horizontal" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input name="name" value="{{ user.get_full_name }}" id="input-name" class="form-control" placeholder="Name" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <select class="selectpicker form-control" name="country">
+                                                                <option value="">Country</option>
+                                                                <option value="Nepal" {% if user.profile.country == "Nepal" %}selected{% endif %}>Nepal</option>
+                                                                <option value="India" {% if user.profile.country == "India" %}selected{% endif %}>India</option>
+                                                                <option value="Pakistan" {% if user.profile.country == "Pakistan" %}selected{% endif %}>Pakistan</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <select class="selectpicker form-control" name="state">
+                                                                <option value="">State</option>
+                                                                <option value="Punjab" {% if user.profile.state == "Punjab" %}selected{% endif %}>Punjab</option>
+                                                                <option value="Haryana" {% if user.profile.state == "Haryana" %}selected{% endif %}>Haryana</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input name="city" value="{{ user.profile.city }}" id="input-city" class="form-control" placeholder="City" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <input class="btn btn-primary" value="Save" type="submit">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-sm-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phone Number Form -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                        <h4 class="panel-title"> Phone Number <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+                                    </a>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-4">
+                                                <form class="form-horizontal" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input name="phone" value="{{ user.profile.phone }}" id="input-phone" class="form-control" placeholder="Enter Phone Number" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <input class="btn btn-primary" value="Save" type="submit">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-sm-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Change Password Form -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                        <h4 class="panel-title">Change Password <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+                                    </a>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-4">
+                                                <form class="form-horizontal" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input name="old_password" id="input-password" class="form-control" placeholder="Enter old password" type="password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input name="new_password1" id="input-password1" class="form-control" placeholder="Enter new password" type="password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input name="new_password2" id="input-password2" class="form-control" placeholder="Repeat password" type="password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <input class="btn btn-primary" value="Save" type="submit">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-sm-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Change Email Form -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                        <h4 class="panel-title"> Change Email <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+                                    </a>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-4">
+                                                <form class="form-horizontal" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input name="email" value="{{ user.email }}" id="input-mail" class="form-control" placeholder="Enter new email" type="email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <input class="btn btn-primary" value="Save" type="submit">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-sm-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Image Form -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                        <h4 class="panel-title">Upload Image <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+                                    </a>
+                                </div>
+                                <div id="collapse5" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-4">
+                                                <form class="form-horizontal" method="post" enctype="multipart/form-data">  <!-- Ensure to include enctype for file upload -->
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input type="file" name="image" id="input-image" class="form-control" accept="image/*">
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <input class="btn btn-primary" value="Upload" type="submit">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-sm-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Delete Account Form -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                        <h4 class="panel-title">Delete Account <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+                                    </a>
+                                </div>
+                                <div id="collapse6" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" method="post">
+                                            {% csrf_token %}
+                                            <div class="buttons text-center">
+                                                <input class="btn btn-danger" name="delete_account" value="Delete Account" type="submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ad-single end here -->
+{% endblock %}
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="topimage">
+	<img src="images/bck_bg.jpg" class="img-fluid" alt="image" title="image">
+</div>
+
+<!-- ad-single start here -->
+<div class="commontop">
+	<div class="container"> 
+		<div class="row">
+			<div class="col-sm-12 col-xs-12">
+				<div class="dashboard">
+					<div class="profile">
+						<div class="col-sm-3 col-xs-12">
+							<img class="img-fluid" src="images/dashboard/dp.png" alt="image" title="image">
+						</div>
+						<div class="col-sm-9 col-xs-12 padd0">
+							<h4>John Doe</h4>
+							<div class="common">
+								<p class="des"><i class="la la-map-marker"></i> Ludhiana, Punjab</p>
+								<p class="des1">Create Account : 2 Years ago</p>
+							</div>
+							<ul class="list-inline">
+								<li ><a href="dashboard.html"><img src="images/dashboard/grid.png" alt="image" title="image" /><p>Dashboard</p></a></li>
+								<li ><a href="dashboard_my_ads.html"><img src="images/dashboard/card.png" alt="image" title="image" /><p>My Ads</p></a></li>
+								<li ><a href="dashboard_my_searches.html"><img src="images/dashboard/search.png" alt="image" title="image" /><p>My Searches</p></a></li>
+								<li ><a href="dashboard_fav_ads.html"><img src="images/dashboard/heart.png" alt="image" title="image" /><p>Favourite Ads</p></a></li>
+								<li><a href="dashboard_message.html"><img src="images/dashboard/message.png" alt="image" title="image" /><p>Messages</p></a></li>
+								<li class="active"><a href="dashboard_setting.html"><img src="images/dashboard/setting.png" alt="image" title="image" /><p>Setting</p></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="inner-setting">
+						<div class="panel-group" id="accordion">
+							<div class="panel panel-default active">
+								<div class="panel-heading">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><h4 class="panel-title">Contact Details  <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+									</a>
+								</div>
+								<div id="collapse1" class="panel-collapse collapse">
+									<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-4"></div>
+										<div class="col-sm-4">
+											<form class="form-horizontal" method="post">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input name="name" value="" id="input-name" class="form-control" placeholder="Name" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<select class="selectpicker form-control bs-select-hidden" name="location">
+															<option value="1">Country</option>
+															<option value="0">India</option>
+															<option value="0">Pakistan</option>
+														</select>
+													</div>
+												</div>	
+												<div class="form-group">	
+													<div class="col-sm-12">
+														<select class="selectpicker form-control bs-select-hidden" name="location">
+															<option value="1">State</option>
+															<option value="0">Punjab</option>
+															<option value="0">Haryana</option>
+														</select>
+													</div>
+												</div>	
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input name="city" value="" id="input-city" class="form-control" placeholder="City" type="text">
+													</div>
+												</div>
+												<div class="buttons">
+													<input class="btn btn-primary" value="Save" type="submit">
+												</div>
+											</form>
+										</div>
+										<div class="col-sm-4"></div>
+									</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><h4 class="panel-title"> Phone Number <i class="fa fa-angle-right" aria-hidden="true"></i></h4>
+									</a>
+								</div>
+								<div id="collapse2" class="panel-collapse collapse">
+									<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-4"></div>
+										<div class="col-sm-4">
+											<form class="form-horizontal" method="post">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input name="phone" value="" id="input-phone" class="form-control" placeholder="Enter Phone Number" type="text">
+													</div>
+												</div>
+												<div class="buttons">
+													<input class="btn btn-primary" value="Save" type="submit">
+												</div>
+											</form>
+										</div>
+										<div class="col-sm-4"></div>
+									</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><h4 class="panel-title">Change Password <i class="fa fa-angle-right" aria-hidden="true"></i>
+									</h4></a>
+								</div>
+								<div id="collapse3" class="panel-collapse collapse">
+									<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-4"></div>
+										<div class="col-sm-4">
+											<form class="form-horizontal" method="post">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input name="password" value="" id="input-password" class="form-control" placeholder="Enter old password" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input name="password1" value="" id="input-password1" class="form-control" placeholder="Enter new password" type="text">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input name="password2" value="" id="input-password2" class="form-control" placeholder="Repeat password" type="text">
+													</div>
+												</div>
+												<div class="buttons">
+													<input class="btn btn-primary" value="Save" type="submit">
+												</div>
+											</form>
+										</div>
+										<div class="col-sm-4"></div>
+									</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><h4 class="panel-title"> Change Email <i class="fa fa-angle-right" aria-hidden="true"></i></h4></a>
+								</div>
+								<div id="collapse4" class="panel-collapse collapse">
+									<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-4"></div>
+										<div class="col-sm-4">
+											<form class="form-horizontal" method="post">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<input name="mail" value="" id="input-mail" class="form-control" placeholder="Enter new email" type="text">
+													</div>
+												</div>
+												<div class="buttons">
+													<input class="btn btn-primary" value="Save" type="submit">
+												</div>
+											</form>
+										</div>
+										<div class="col-sm-4"></div>
+									</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><h4 class="panel-title">Email Notification <i class="fa fa-angle-right" aria-hidden="true"></i></h4></a>
+								</div>
+								<div id="collapse5" class="panel-collapse collapse">
+									<div class="panel-body">
+										<form class="form-horizontal" method="post">
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div class="checked">
+														<div class="check">
+															<input type="checkbox" name="credit" class="checkclass"/>Yes, I want to receive newsletter.
+															<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium dictum diam vel laoreet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer dictum justo nec lacus porta congue. Phasellus convallis ut urna a lobortis. Vestibulum bibendum quam ligula, ac fringilla mi efficitur sed.</p>
+														</div>
+														<div class="check">
+															<input type="checkbox" name="credit" class="checkclass"/>Yes, I want to receive email notification of messages.
+														</div>
+														<div class="check">
+															<input type="checkbox" name="credit" class="checkclass"/>Yes, I want to receive email alerts about new listing.
+														</div>
+													</div>
+												</div>
+												<div class="buttons">
+													<input class="btn btn-primary" value="Save" type="submit">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><h4 class="panel-title">Delete Account <i class="fa fa-angle-right" aria-hidden="true"></i>
+									</h4></a>
+								</div>
+								<div id="collapse6" class="panel-collapse collapse">
+									<div class="panel-body">
+										<form class="form-horizontal" method="post">
+											<div class="buttons text-center">
+												<input class="btn btn-primary" value="Delete Account" type="submit">
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ad-single end here -->
+{% endblock %} {% endcomment %}

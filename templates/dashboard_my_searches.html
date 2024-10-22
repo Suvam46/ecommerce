@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="topimage">
+    <img src="{% static 'images/bck_bg.jpg' %}" class="img-fluid" alt="Background Image" title="Background Image">
+</div>
+
+<!-- User Dashboard Start -->
+<div class="commontop">
+    <div class="container"> 
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="dashboard">
+                    <div class="profile">
+                        <div class="col-sm-3 col-xs-12">
+                            {% if user.image %}
+                                <img class="img-fluid" src="{{ user.image.url }}" alt="Profile Picture" title="Profile Picture">
+                            {% else %}
+                                <img class="img-fluid" src="{% static 'images/dashboard/dp.png' %}" alt="Default Profile Picture" title="Default Profile Picture">
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-9 col-xs-12 padd0">
+                            <h4>{{ user.username }}</h4>
+                            <div class="common">
+                                <p class="des"><i class="la la-map-marker"></i> {{ user.profile.location|default:"Location not available" }}</p>  <!-- Assume location is in profile -->
+                                <p class="des1">Created Account: {{ user.date_joined|date:"Y-m-d" }}</p>
+                            </div>
+                            <ul class="list-inline">
+                                <li><a href="{% url 'TestApp:user_dashboard' %}">Dashboard</a></li>
+                                <li><a href="{% url 'TestApp:my_ads' %}">My Ads</a></li>
+                                <li class="active"><a href="{% url 'TestApp:my_searches' %}">My Searches</a></li>
+                                <li><a href="{% url 'TestApp:fav_ads' %}">Favourite Ads</a></li>
+                                
+                                <li><a href="{% url 'TestApp:settings' %}">Settings</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="inner-search">
+                        <div class="row">
+                            {% for ad in ads %}
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="box">
+                                    <div class="image"><img src="{{ ad.image.url }}" alt="Ad Image" class="img-fluid"></div>
+                                    <div class="pull-left">
+                                        <h4>{{ ad.category }} <i class="la la-angle-double-right"></i> {{ ad.subcategory }}</h4>
+                                        <ul class="list-inline">
+                                            <li><i class="la la-map-marker"></i> {{ ad.location }}</li>
+                                            <li><i class="la la-clock-o"></i> {{ ad.timestamp|date:"H:i A" }}</li>  <!-- Assuming you have a timestamp field -->
+                                        </ul>
+                                        <p><i class="la la-circle"></i> Get email notifications</p>
+                                    </div>
+                                    <div class="pull-right">
+                                        <button type="button">View</button>
+                                        <button type="button">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- User Dashboard End -->
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% block content %}
+<div class="topimage">
+	<img src="images/bck_bg.jpg" class="img-fluid" alt="image" title="image">
+</div>
+
+<!-- ad-single start here -->
+<div class="commontop">
+	<div class="container"> 
+		<div class="row">
+			<div class="col-sm-12 col-xs-12">
+				<div class="dashboard">
+					<div class="profile">
+						<div class="col-sm-3 col-xs-12">
+							<img class="img-fluid" src="images/dashboard/dp.png" alt="image" title="image">
+						</div>
+						<div class="col-sm-9 col-xs-12 padd0">
+							<h4>John Doe</h4>
+							<div class="common">
+								<p class="des"><i class="la la-map-marker"></i> Ludhiana, Punjab</p>
+								<p class="des1">Create Account : 2 Years ago</p>
+							</div>
+							<ul class="list-inline">
+								<li ><a href="dashboard.html"><img src="images/dashboard/grid.png" alt="image" title="image" /><p>Dashboard</p></a></li>
+								<li ><a href="dashboard_my_ads.html"><img src="images/dashboard/card.png" alt="image" title="image" /><p>My Ads</p></a></li>
+								<li class="active"><a href="dashboard_my_searches.html"><img src="images/dashboard/search.png" alt="image" title="image" /><p>My Searches</p></a></li>
+								<li ><a href="dashboard_fav_ads.html"><img src="images/dashboard/heart.png" alt="image" title="image" /><p>Favourite Ads</p></a></li>
+								<li><a href="dashboard_message.html"><img src="images/dashboard/message.png" alt="image" title="image" /><p>Messages</p></a></li>
+								<li><a href="dashboard_setting.html"><img src="images/dashboard/setting.png" alt="image" title="image" /><p>Setting</p></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="inner-search">
+						<div class="links">
+							<ul class="list-inline">
+								<li><a href="">All Clear</a></li>
+							</ul>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/vehicle/icons8-motorcycle.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Vehicle <i class="la la-angle-double-right"></i> Bikes</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/mobile/smartphone-tablet.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Mobile <i class="la la-angle-double-right"></i> Iphones</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/electronics/globe-bulb.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Electonices <i class="la la-angle-double-right"></i> TVs</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/jobs/icon-briefcase.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Jobs <i class="la la-angle-double-right"></i> Accountant</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/real-estate/building.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Real Estate <i class="la la-angle-double-right"></i> Apartments</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/pets/dog.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Pets <i class="la la-angle-double-right"></i> Dogs</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/furniture/icon-chair.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Furniture <i class="la la-angle-double-right"></i> Sofa</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="box">
+									<div class="image"><img src="images/fashion/trainers.png" alt="image" title="image" class="img-fluid"></div>
+									<div class="pull-left">
+										<h4>Fashion <i class="la la-angle-double-right"></i> Shoes</h4>
+										<ul class="list-inline">
+											<li><i class="la la-map-marker"></i> Ludhiana, Punjab, India</li>
+											<li><i class="la la-clock-o"></i> 2.45 pm</li>
+										</ul>
+										<p><i class="la la-circle"></i> Get email notifications</p>
+									</div>
+									<div class="pull-right">
+										<button type="button">View</button>
+										<button type="button">Delete</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="text-center icon">
+							<i class="la la-spinner fa-spin"></i>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ad-single end here -->
+{% endblock %} {% endcomment %}

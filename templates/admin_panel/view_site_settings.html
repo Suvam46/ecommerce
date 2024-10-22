@@ -1,0 +1,50 @@
+{% extends 'admin_panel/base.html' %}
+{% block content %}
+<h1>Manage Site Settings</h1>
+
+<a href="{% url 'edit_site_settings' %}" class="btn btn-warning btn-md-3">Edit Site Settings</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Stats</th>
+            <th>Contact Details</th>
+            <th>Social Media</th>
+            <th>Miscellaneous</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for settings in settings_entries %}
+        <tr>
+            <td>
+                Coffee: {{ settings.cup_of_coffee }} <br>
+                Happy Users: {{ settings.happy_users }} <br>
+                Ads Posted: {{ settings.ads_posts }} <br>
+                Total Users: {{ settings.total_users }}
+            </td>
+            <td>
+                Address: {{ settings.address|truncatewords:10 }} <br>
+                Email: {{ settings.email }} <br>
+                Phone: {{ settings.phone_number }}
+            </td>
+            <td>
+                Facebook: {{ settings.facebook_link }} <br>
+                Instagram: {{ settings.instagram_link }} <br>
+                YouTube: {{ settings.youtube_link }} <br>
+                LinkedIn: {{ settings.linkedin_link }}
+            </td>
+            <td>
+                Terms and Conditions: {{ settings.terms_and_conditions|truncatewords:10 }} <br>
+                Iframe Map: {{ settings.iframe_map_location|truncatewords:10 }}
+            </td>
+            
+            
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No settings found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

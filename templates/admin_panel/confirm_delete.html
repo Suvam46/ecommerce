@@ -1,0 +1,13 @@
+{% extends 'admin_panel/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Delete Banner</h1>
+    <p>Are you sure you want to delete the banner?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'view_banner' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

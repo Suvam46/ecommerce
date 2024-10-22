@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<!-- breadcrumb end here -->
+<div class="topimage">
+    <img src="{% static 'images/bck_bg.jpg' %}" class="img-fluid" alt="image" title="image" />
+</div>
+<div class="bread-crumb">
+    <div class="container">
+        <div class="matter">
+            <div class="pull-left">
+                <ul class="list-inline">
+                    <li><a href="{% url 'TestApp:home' %}">Home</a></li>
+                    <li><a href="{% url 'TestApp:blog_list' %}">Our Blogs</a></li>
+                    <li><a href="#">{{ post.title }}</a></li>
+                </ul>
+            </div>
+            <div class="pull-right">
+                <h2>{{ post.title }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb end here -->
+
+<!-- blog detail start here -->
+<div class="commontop blog">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="left">
+					<form class="form-horizontal search" method="post">
+						<fieldset>
+							<div class="form-group">
+								<input name="s" value="" class="form-control" placeholder="Enter Keyword" type="text">
+							</div>
+							<button type="submit" value="submit" class="btn"><i class="icon_search" aria-hidden="true"></i></button>
+						</fieldset>
+					</form>
+					{% comment %} <div class="category">
+						<h1>Category</h1>
+						<ul class="list-unstyled">
+							<li><a href="vehicle_category.html"><img src="images/blog/motorcycle.png" class="img-fluid" alt="image" title="image" /> Vehicle</a></li>
+							<li><a href="mobile_category.html"><img src="images/blog/tablet.png" class="img-fluid" alt="image" title="image" /> Mobiles</a></li>
+							<li><a href="electonics_category.html"><img src="images/blog/globe-bulb.png" class="img-fluid" alt="image" title="image" /> Electonics</a></li>
+							<li><a href="real_estate_category.html"><img src="images/blog/building.png" class="img-fluid" alt="image" title="image" /> Real Estate</a></li>
+							<li><a href="fashion_category.html"><img src="images/blog/trainer.png" class="img-fluid" alt="image" title="image" /> Fashion</a></li>
+							<li><a href="furniture_category.html"><img src="images/blog/chair.png" class="img-fluid" alt="image" title="image" /> Furniture</a></li>
+							<li><a href="jobs_category.html"><img src="images/blog/briefcase.png" class="img-fluid" alt="image" title="image" /> Jobs</a></li>
+							<li><a href="services_category.html"><img src="images/blog/maintenance.png" class="img-fluid" alt="image" title="image" /> Services</a></li>
+							<li><a href="pets_category.html"><img src="images/blog/dog.png" class="img-fluid" alt="image" title="image" /> Pets</a></li>
+							<li><a href="education_category.html"><img src="images/blog/books.png" class="img-fluid" alt="image" title="image" /> Education</a></li>
+							<li><a href="matrimony_category.html"><img src="images/blog/man-woman.png" class="img-fluid" alt="image" title="image" /> Matrimony</a></li>
+							<li><a href="note_coins_category.html"><img src="images/blog/paper-money.png" class="img-fluid" alt="image" title="image" /> Notes and Coins</a></li>
+						</ul>
+					</div> {% endcomment %}
+                   
+					{% comment %} <div class="subcribe">
+						<h1>Subscibe</h1>
+						<form class="form-horizontal" method="post">
+							<fieldset>
+								<div class="form-group">
+									<input name="s" value="" class="form-control" placeholder="Enter your email" type="text">
+								</div>
+								<button type="submit"  class="btn">Subscibe Now</button>
+							</fieldset>
+						</form>
+					</div> {% endcomment %}
+                    <div class="category">
+                        <h1>Category</h1>
+                        <ul class="list-inline">
+                            {% for category in categories %}
+                            <li><a href="{{ category.link|default:'#' }}">
+                                <img src="{{ category.image.url }}" class="img-fluid" alt="{{ category.name }}" title="{{ category.name }}" /> 
+                                {{ category.name }}</a></li>{% endfor %}
+                            
+                            </ul>
+                    </div>
+                    <div class="subscribe">
+                        <h1>Subscribe</h1>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-success">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    
+                        <form class="form-horizontal" method="post">
+                            {% csrf_token %}
+                            <fieldset>
+                                <div class="form-group">
+                                    {{ form.email }}  
+                                </div>
+                                <button type="submit" class="btn">Subscribe Now</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <br>
+				<div class="tag">
+					<h1>TAGS</h1>
+					<ul class="list-inline">
+						{% for tag in tags %}
+							<li><a href="{% url 'TestApp:posts_by_tag' tag.id %}">{{ tag.name }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+					{% comment %} <div class="tag">
+						<h1>TAGS</h1>
+						<ul class="list-inline">
+							<li><a href="vehicle_category.html">Vehicles</a></li>
+							<li><a href="pets_category.html">Pets</a></li>
+							<li><a href="services_category.html">Services</a></li>
+							<li><a href="jobs_category.html">Jobs</a></li>
+							<li><a href="fashion_category.html">Fashion</a></li>
+							<li><a href="matrimony_category.html">Matrimony</a></li>
+							<li><a href="real_estate_category.html">Real Estate</a></li>
+							<li><a href="electonics_category.html">Electonics</a></li>
+						</ul>
+					</div> {% endcomment %}
+				</div>
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <div class="box">
+                    <div class="image">
+                        <img src="{{ post.image.url }}" alt="image" title="image" class="img-fluid">
+                        <div class="icon">
+                            <ul class="list-inline">
+                                <li>{{ post.created_at|date:"d M" }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="box-caption">	
+                        <ul class="list-inline icons">
+                            <li><a href="#"><i class="la la-user"></i>By: Admin</a></li>
+                            <li><a href="#"><i class="la la-eye"></i> {{ post.views_count }}</a></li>
+                            <li><a href="#"><i class="la la-comments"></i>{{ comments.count }}</a></li>
+                        </ul>
+                        <h2>{{ post.title }}</h2>
+                        <p>{{ post.content }}</p>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comment">
+                        <h3>Comments {{ comments.count }} <span class="pull-right"><a href="#leave-comment">Post comment</a></span></h3>
+                        <ul class="list-unstyled">
+                            {% for comment in comments %}
+                                <li>
+                                    <img src="{% static 'images/blog/01.png' %}" alt="user" title="user" class="img-fluid">
+                                    <div class="profile">
+                                        <h4>{{ comment.name }} <span class="pull-right"><a href="#">Reply</a></span></h4>
+                                        <h6>Added {{ comment.created_at|date:"d M Y" }}</h6>
+                                        <p>{{ comment.content }}</p>
+                                    </div>
+                                </li>
+                            {% empty %}
+                                <li>No comments yet. Be the first to comment!</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Leave a Comment Section -->
+                    {% comment %} <div class="leave" id="leave-comment">
+                        <h1>Post a Comment</h1>
+                        <form method="post">
+                            {% csrf_token %}
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input class="form-control" placeholder="Name" id="input-name" name="name" required="" type="text">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control" id="input-email" placeholder="Email" name="email" required="" type="email">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control" id="input-enquiry" rows="10" name="content" placeholder="Comment" required=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="buttons">
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </div>
+                            </fieldset> 
+                        </form>
+                    </div> {% endcomment %}
+
+
+					<div class="leave" id="leave-comment">
+						<h1>Post a Comment</h1>
+						<form method="post" novalidate>
+							{% csrf_token %}
+							{{ form|crispy }}  
+							<div class="buttons">
+								<button type="submit" class="btn btn-primary">Send</button>
+							</div>
+						</form>
+					</div>
+					
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- blog detail end here -->
+{% endblock %}
+
+
+
+
+

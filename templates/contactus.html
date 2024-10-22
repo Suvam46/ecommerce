@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- breadcrumb end here -->
+<div class="topimage">
+	<img src="{% static 'images/bck_bg.jpg' %}" class="img-fluid" alt="image" title="image" />
+</div>
+<div class="bread-crumb">
+	<div class="container">
+		<div class="matter">
+			<div class="pull-left">
+				<ul class="list-inline">
+					<li><a href="{% url "TestApp:home" %}">Home</a></li>
+					<li><a href="{% url 'TestApp:contact_us' %}">Contact us</a></li>
+				</ul>
+			</div>
+			<div class="pull-right">
+				<h2>Contact us</h2>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- breadcrumb end here -->
+
+<!-- contactus start here -->
+<div class="contactus">
+    <div class="container"> 
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="map">
+					{{ site_settings.iframe_map_location|safe }}
+                </div>
+            </div>
+			<!-- contactus.html -->
+<div class="col-sm-9 col-xs-12">
+    <form method="post" enctype="multipart/form-data" class="form-horizontal">
+        {% csrf_token %}
+        <h5>Contact Us</h5>
+        <hr />
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    {{ form.name.errors }}
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    {{ form.email.errors }}
+                    {{ form.email }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    {{ form.subject.errors }}
+                    {{ form.subject }}
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    {{ form.phone.errors }}
+                    {{ form.phone }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.enquiry.errors }}
+            {{ form.enquiry }}
+        </div>
+        <div class="buttons">
+            <input class="btn btn-primary" value="Send" type="submit">
+        </div>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+            {% comment %} <div class="col-sm-9 col-xs-12">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                    {% csrf_token %}
+                    <h5>Contact Us</h5>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input name="name" id="input-name" class="form-control" placeholder="Name" type="text" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input name="email" id="input-email" class="form-control" placeholder="Email address" type="text" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input name="subject" id="input-subject" class="form-control" placeholder="Subject" type="text" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input name="phone" id="input-phone" class="form-control" placeholder="Phone number" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="enquiry" id="input-enquiry" class="form-control" placeholder="Write message"></textarea>
+                    </div>
+                    <div class="buttons">
+                        <input class="btn btn-primary" value="Send" type="submit">
+                    </div>
+                </form>
+            </div> {% endcomment %}
+            <div class="col-sm-3 col-xs-12">
+                <div class="address mar-b">
+                    <h3>Address</h3>
+                    <p>{{ site_settings.address|safe }}</p>
+                </div>
+                <div class="address">
+                    <h3>Contact Info</h3>
+                    <ul class="list-unstyled">
+                        <li><span>Address : </span><p>{{ site_settings.address|safe }}</p></li>
+                        <li><span>Email : </span><p><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a></p></li>
+                        <li><span>Phone : </span><p>{{ site_settings.phone_number }}</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% comment %} <div class="contactus">
+	<div class="container"> 
+		<div class="row">
+			<div class="col-sm-12 col-xs-12">
+				<div class="map">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d219104.85983086875!2d75.71658808151895!3d30.90026973769041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a837462345a7d%3A0x681102348ec60610!2sLudhiana%2C+Punjab!5e0!3m2!1sen!2sin!4v1482266274532"></iframe>
+				</div>
+			</div>
+			<div class="col-sm-9 col-xs-12">
+				<form method="post" enctype="multipart/form-data" class="form-horizontal">
+					<h5>Browse Category</h5>
+					<hr />
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<input name="name" value="" id="input-name" class="form-control" placeholder="Name" type="text" required>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<input name="email" value="" id="input-email" class="form-control" placeholder="Email address" type="text" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<input name="name" value="" id="input-subject" class="form-control" placeholder="Subject" type="text">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<input name="phone" value="" id="input-phone" class="form-control" placeholder="Website" type="text">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+							<textarea name="enquiry" id="input-enquiry" class="form-control">Write message</textarea>
+					</div>
+					<div class="buttons">
+						<input class="btn btn-primary" value="Send" type="submit">
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-3 col-xs-12">
+				<div class="address mar-b">
+					<h3>Address</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc metus lectus, viverra vehicula porta id, posuere at massa. Nam sollicitudin porta nunc. </p>
+				</div>
+				<div class="address">
+					<h3>Contact Info</h3>
+					<ul class="list-unstyled">
+						<li><span>Address : </span><p> Lorem ipsum 115/2, Near BOK Chownk, Ludhiana, Punjab, INDIA.</p></li>
+						<li><span>Email : </span><p><a href="#">Classifiedspot@example.com</a></p></li>
+						<li><span>Phone : </span><p>022 888 8888 & 011 888 8888</p></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> {% endcomment %}
+<!-- contactus end here -->
+
+
